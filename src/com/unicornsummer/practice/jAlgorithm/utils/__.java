@@ -49,7 +49,7 @@ public final class __ {
             for (Method m : methods) {
                 if (m.getName().equals(methodName)) {
                     if (methodCounter >= 1) {
-                        throw new IllegalArgumentException("Too many method in the same name");
+                        throw new IllegalArgumentException("Too many methods in the same name");
                     }
                     target = m;
                     ++methodCounter;
