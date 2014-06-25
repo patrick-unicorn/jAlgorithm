@@ -7,13 +7,13 @@ public final class BubbleSort {
 
     public static void main(String[] args) {
         try {
-//            __.perfTest(10, 5, 5, 100, new BubbleSortImpl_0()::sort, true);
-//            __.perfTest(10000, 10000, 10, 1000, new BubbleSortImpl_0()::sort, false);
+            __.perfTest(10, 5, 5, 100, new BubbleSortImpl_0()::sort, true);
+            __.perfTest(10000, 10000, 10, 1000, new BubbleSortImpl_0()::sort, false);
             
-            System.out.println("*************");
-            
+//            System.out.println("*************");
+//            
 //            __.perfTest(10, 5, 5, 100, new BubbleSortImpl_1()::sort, true);
-            __.perfTest(10000, 10000, 10, 1000, new BubbleSortImpl_1()::sort, false);
+//            __.perfTest(10000, 10000, 10, 1000, new BubbleSortImpl_1()::sort, false);
         } catch(Throwable t) {
             t.printStackTrace();
         }

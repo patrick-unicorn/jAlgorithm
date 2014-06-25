@@ -1,15 +1,13 @@
 package com.unicornsummer.practice.jAlgorithm;
 
-import java.util.Arrays;
-
 import com.unicornsummer.practice.jAlgorithm.utils.__;
 
 public final class QuickSort {
 
     public static void main(String[] args) {
         try {
-            __.perfTest(10, 5, 1, 10, QuickSort::sort, true);
-//            __.perfTest(10000, 10000, 10, 1000, QuickSort::sort, false);
+            __.perfTest(10, 5, 5, 10, QuickSort::sort, true);
+            __.perfTest(10000, 10000, 10, 1000, QuickSort::sort, false);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -21,11 +19,9 @@ public final class QuickSort {
     }
     
     private static void sort(int[] array, int leftIndex, int rightIndex) {
-        // break point
         if (leftIndex < rightIndex) {
-            int privotIndex = (int) (leftIndex + rightIndex / 2);
+            int privotIndex = (int) ((leftIndex + rightIndex) / 2);
             int cutPointIndex = partition(array, leftIndex, rightIndex, privotIndex);
-            System.out.println("LI:" + leftIndex + " RI:" + rightIndex + " PI: " + privotIndex  + " CI: " + cutPointIndex + " SUB:" + Arrays.toString(array));
             sort(array, leftIndex, cutPointIndex - 1);
             sort(array, cutPointIndex + 1, rightIndex);
         }
@@ -41,7 +37,7 @@ public final class QuickSort {
                 stroeIndex += 1;
             }
         }
-        __.swapArrayElement(array, stroeIndex, array.length - 1);
+        __.swapArrayElement(array, stroeIndex, rightIndex);
         return stroeIndex;
     }
     

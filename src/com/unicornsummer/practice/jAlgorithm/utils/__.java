@@ -4,6 +4,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
+/**
+ * 
+ * @author unicorn(haiyin-ma) 2014-04-11
+ */
 public final class __ {
 
     public static int[] RanndomGenerateArray() 
@@ -65,6 +69,12 @@ public final class __ {
     }
     
     public static void swapArrayElement(int[] array, int index0, int index1) {
+        if (array == null || index0 > (array.length - 1) || index1 > (array.length - 1)) {
+            throw new IllegalArgumentException();
+        }
+        if (index0 == index1) {
+            return;
+        }
         int temp = array[index0];
         array[index0] = array[index1];
         array[index1] = temp;
