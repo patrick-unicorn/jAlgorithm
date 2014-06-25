@@ -1,5 +1,8 @@
 package com.unicornsummer.practice.jAlgorithm.utils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -33,6 +36,71 @@ public final class __ {
         return arrays;
     }
     
+    public static Method findDeclaredMethodByName(Object obj, String methodName) {
+        return findDeclaredMethodByName(obj.getClass(), methodName);
+    }
+    
+    public static Method findDeclaredMethodByName(Class<?> clazz, String methodName) {
+        int methodCounter = 0;
+        Method target = null;
+        Method[] methods = clazz.getDeclaredMethods();
+        
+        if (methods != null && methods.length > 0) {
+            for (Method m : methods) {
+                if (m.getName().equals(methodName)) {
+                    if (methodCounter >= 1) {
+                        throw new IllegalArgumentException("Too many method in the same name");
+                    }
+                    target = m;
+                    ++methodCounter;
+                }
+            }
+        }
+        if (target == null) {
+            throw new IllegalArgumentException("No such method");
+        }
+        
+        return target;
+    }
+    
+    public static void perfTest(int loop, Class<?> clazz, String methodName, Object... params) 
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  
+    {
+        Method m = findDeclaredMethodByName(clazz, methodName);
+        for (int i = 0; i < loop; i++) {
+            System.out.format("========================%s=========================", loop).println();
+            long startTime = System.currentTimeMillis();
+            m.invoke(null, params);
+            long endTime = System.currentTimeMillis();
+            System.out.format(">>> time:[%d ms]", endTime - startTime).println();
+        }
+    }
+    
+    public static void perfTest(int loop, Object obj, String methodName, Object... params) 
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  
+    {
+        Method m = findDeclaredMethodByName(obj, methodName);
+        Object actualObj =  Modifier.isStatic(m.getModifiers()) ? null : obj;
+        
+        for (int i = 0; i < loop; i++) {
+            System.out.format("========================%s=========================", loop).println();
+            long startTime = System.currentTimeMillis();
+            m.invoke(actualObj, params);
+            long endTime = System.currentTimeMillis();
+            System.out.format(">>> time:[%d ms]", endTime - startTime).println();
+        }
+    }
+    
+    public static void perfTest(int loop, DelegateInterface delegate, Object... params) {
+        for (int i = 0; i < loop; i++) {
+            System.out.format("========================%s=========================", loop).println();
+            long startTime = System.currentTimeMillis();
+            delegate.execute(params);
+            long endTime = System.currentTimeMillis();
+            System.out.format(">>> time:[%d ms]", endTime - startTime).println();
+        }
+    }
+    
     public static void perfTest(int baseLength, int step, int loop, Sorter sorter) 
             throws NoSuchAlgorithmException 
     {
@@ -49,7 +117,7 @@ public final class __ {
             throws NoSuchAlgorithmException 
     {
         for (int i = 0; i < loop; i++) {
-            System.out.println("==========================================================");
+            System.out.format("========================%s=========================", loop).println();
             int length = baseLength + i * step;
             int[] arrays = RanndomGenerateArray(length, maxVal);
             
@@ -64,7 +132,7 @@ public final class __ {
             if (isPrintArray) {
                 System.out.println("RESULT: " + Arrays.toString(result));
             }
-            System.out.println(String.format(">>> Len[%s], Total[%d ms]", length, diff));
+            System.out.format(">>> Len[%d], Total[%d ms]", length, diff).println();
         }
     }
     
