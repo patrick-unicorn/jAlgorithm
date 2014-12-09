@@ -10,7 +10,7 @@ public final class SubSequence {
     
     public static void main(String[] args) {
         try {
-            Integer[] testArr0 = __.WrapReferencArray(__.RanndomGenerateArray(20));
+            Integer[] testArr0 = __.wrapReferencArray(__.ranndomGenerateArray(20));
             __.perfTest(SubSequence.class, "ComputeMaxSubSequence0", testArr0);
             
             

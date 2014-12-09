@@ -47,19 +47,19 @@ public final class __ {
         }
     }
 
-    public static int[] RanndomGenerateArray() 
+    public static int[] ranndomGenerateArray() 
             throws NoSuchAlgorithmException 
     {
-        return RanndomGenerateArray(Integer.MAX_VALUE);
+        return ranndomGenerateArray(Integer.MAX_VALUE);
     }
     
-    public static int[] RanndomGenerateArray(int expectedLength) 
+    public static int[] ranndomGenerateArray(int expectedLength) 
             throws NoSuchAlgorithmException 
     {
-        return RanndomGenerateArray(expectedLength, Integer.MAX_VALUE);
+        return ranndomGenerateArray(expectedLength, Integer.MAX_VALUE);
     }
     
-    public static int[] RanndomGenerateArray(int expectedLength, int max) 
+    public static int[] ranndomGenerateArray(int expectedLength, int max) 
             throws NoSuchAlgorithmException 
     {
         int[] arrays = new int[expectedLength];
@@ -70,7 +70,7 @@ public final class __ {
         return arrays;
     }
     
-    public static Integer[] WrapReferencArray(int[] array) {
+    public static Integer[] wrapReferencArray(int[] array) {
         if (array == null) {
             throw new NullPointerException("array");
         }
@@ -81,7 +81,7 @@ public final class __ {
         return result;
     }
     
-    public static Long[] WrapReferencArray(long[] array) {
+    public static Long[] wrapReferencArray(long[] array) {
         if (array == null) {
             throw new NullPointerException("array");
         }
@@ -92,7 +92,7 @@ public final class __ {
         return result;
     }
     
-    public static Short[] WrapReferencArray(short[] array) {
+    public static Short[] wrapReferencArray(short[] array) {
         if (array == null) {
             throw new NullPointerException("array");
         }
@@ -204,7 +204,7 @@ public final class __ {
         for (int i = 0; i < loop; i++) {
             System.out.format("========================%s=========================", loop).println();
             int length = baseLength + i * step;
-            int[] arrays = RanndomGenerateArray(length, maxVal);
+            int[] arrays = ranndomGenerateArray(length, maxVal);
             
             if (isPrintArray) {
                 System.out.println("TARGET: " + Arrays.toString(arrays));
