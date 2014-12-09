@@ -10,7 +10,7 @@ public final class SubSequence {
     
     public static void main(String[] args) {
         try {
-            Integer[] testArr0 = __.wrapReferencArray(__.ranndomGenerateArray(20));
+            Integer[] testArr0 = __.wrapReferencArray(__.randomGenerateArray(20, 100, true));
             __.perfTest(SubSequence.class, "ComputeMaxSubSequence0", testArr0);
             
             
@@ -21,7 +21,7 @@ public final class SubSequence {
     
     public static Integer[] ComputeMaxSubSequence0(Integer[] sequence) {
         List<Integer> results = new ArrayList<Integer>();
-        return results.toArray(new Integer[] { });
+        return results.toArray(new Integer[] {});
     }
 
 }

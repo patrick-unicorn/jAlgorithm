@@ -47,25 +47,37 @@ public final class __ {
         }
     }
 
-    public static int[] ranndomGenerateArray() 
+    public static int[] randomGenerateArray() 
             throws NoSuchAlgorithmException 
     {
-        return ranndomGenerateArray(Integer.MAX_VALUE);
+        return randomGenerateArray(Integer.MAX_VALUE);
     }
     
-    public static int[] ranndomGenerateArray(int expectedLength) 
+    public static int[] randomGenerateArray(int expectedLength) 
             throws NoSuchAlgorithmException 
     {
-        return ranndomGenerateArray(expectedLength, Integer.MAX_VALUE);
+        return randomGenerateArray(expectedLength, Integer.MAX_VALUE);
     }
     
-    public static int[] ranndomGenerateArray(int expectedLength, int max) 
+    public static int[] randomGenerateArray(int expectedLength, int max) 
             throws NoSuchAlgorithmException 
     {
+        return randomGenerateArray(expectedLength, max, false);
+    }
+    
+    public static int[] randomGenerateArray(int expectedLength, int max, boolean containNegative) 
+            throws NoSuchAlgorithmException 
+    {
+        boolean isPositive = true;
+        SecureRandom sr1 = SecureRandom.getInstanceStrong();
+        
         int[] arrays = new int[expectedLength];
-        SecureRandom sr = SecureRandom.getInstanceStrong();
+        SecureRandom sr0 = SecureRandom.getInstanceStrong();
         for (int i = 0; i < expectedLength; i++) {
-            arrays[i] = sr.nextInt(max);
+            if (containNegative) {
+                isPositive = sr1.nextBoolean();
+            }
+            arrays[i] = sr0.nextInt(max) * (isPositive ? 1 : -1);
         }
         return arrays;
     }
@@ -204,7 +216,7 @@ public final class __ {
         for (int i = 0; i < loop; i++) {
             System.out.format("========================%s=========================", loop).println();
             int length = baseLength + i * step;
-            int[] arrays = ranndomGenerateArray(length, maxVal);
+            int[] arrays = randomGenerateArray(length, maxVal);
             
             if (isPrintArray) {
                 System.out.println("TARGET: " + Arrays.toString(arrays));
