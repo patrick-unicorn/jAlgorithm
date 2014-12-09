@@ -12,6 +12,40 @@ import java.util.Arrays;
  * @author unicorn(haiyin-ma) 2014-04-11
  */
 public final class __ {
+    
+    /**
+     * 当可变参数为单个非<code>Object[]</code>数组时，将其包装为一个<code>Object[]</code>数组
+     * 
+     * @param params 可变参数(必定是个数组)
+     * @return
+     */
+    public static Object[] reduceVariadicArguments(Object... params) {
+        Class<?> clazz = params.getClass().getComponentType();
+        if (clazz.equals(Object.class)) {
+            return params;
+        }
+        return new Object[] { params };
+    }
+    
+    public static void print(String tagName, Object obj) {
+        print(tagName, obj, new Object[]{});
+    }
+    
+    /**
+     * 打印对象
+     * 
+     * @param tagName
+     * @param obj 如果该参数为数组类型，那么要求数组元素必须为引用类型才能正确转换
+     * @param a 泛型参数T必须是引用类型，不能为<code>int</code>等基本值类型
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> void print(String tagName, Object obj, T[] a) {
+        if (obj.getClass().isArray()) {
+            System.out.println(tagName+ ": " + Arrays.toString((T[]) obj));
+        } else {
+            System.out.println(tagName+ ": " + obj);
+        }
+    }
 
     public static int[] RanndomGenerateArray() 
             throws NoSuchAlgorithmException 
@@ -34,6 +68,39 @@ public final class __ {
             arrays[i] = sr.nextInt(max);
         }
         return arrays;
+    }
+    
+    public static Integer[] WrapReferencArray(int[] array) {
+        if (array == null) {
+            throw new NullPointerException("array");
+        }
+        Integer[] result = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    public static Long[] WrapReferencArray(long[] array) {
+        if (array == null) {
+            throw new NullPointerException("array");
+        }
+        Long[] result = new Long[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    public static Short[] WrapReferencArray(short[] array) {
+        if (array == null) {
+            throw new NullPointerException("array");
+        }
+        Short[] result = new Short[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
     }
     
     public static Method findDeclaredMethodByName(Object obj, String methodName) {
@@ -63,15 +130,25 @@ public final class __ {
         return target;
     }
     
+    public static void perfTest(Class<?> clazz, String methodName, Object... params) 
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  
+    {
+        perfTest(1, clazz, methodName, params);
+    }
+    
     public static void perfTest(int loop, Class<?> clazz, String methodName, Object... params) 
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  
     {
         Method m = findDeclaredMethodByName(clazz, methodName);
         for (int i = 0; i < loop; i++) {
             System.out.format("========================%s=========================", loop).println();
+            print("PARAM", params);
+
             long startTime = System.currentTimeMillis();
-            m.invoke(null, params);
+            Object result = m.invoke(null, reduceVariadicArguments(params));
             long endTime = System.currentTimeMillis();
+            
+            print("RESULT", result);
             System.out.format(">>> time:[%d ms]", endTime - startTime).println();
         }
     }
@@ -84,9 +161,13 @@ public final class __ {
         
         for (int i = 0; i < loop; i++) {
             System.out.format("========================%s=========================", loop).println();
+            print("PARAM", params);
+            
             long startTime = System.currentTimeMillis();
-            m.invoke(actualObj, params);
+            Object result = m.invoke(actualObj, params);
             long endTime = System.currentTimeMillis();
+            
+            print("RESULT", result);
             System.out.format(">>> time:[%d ms]", endTime - startTime).println();
         }
     }
@@ -94,9 +175,13 @@ public final class __ {
     public static void perfTest(int loop, DelegateInterface delegate, Object... params) {
         for (int i = 0; i < loop; i++) {
             System.out.format("========================%s=========================", loop).println();
+            print("PARAM", params);
+            
             long startTime = System.currentTimeMillis();
-            delegate.execute(params);
+            Object result = delegate.execute(params);
             long endTime = System.currentTimeMillis();
+            
+            print("RESULT", result);
             System.out.format(">>> time:[%d ms]", endTime - startTime).println();
         }
     }
